@@ -4,7 +4,15 @@ symfony twig extensions bundle
 
 Extensions
 
-**validator extension**
+
+### google analytics filters
+
+* filter to add google campaign information to links
+
+
+[read ga_extension docs](Resources/doc/ga-extension.md)
+
+### validator filters
 
 Apply symfony validator on data and return errors as an array.
 

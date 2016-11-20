@@ -3,7 +3,7 @@
  * Date: 25/10/2016
  */
 
-namespace T4\Bundle\TwigExtensionBundle\Twig;
+namespace T4\Bundle\TwigExtensionBundle\Twig\Extension;
 
 
 use Symfony\Bundle\TwigBundle\DependencyInjection\TwigExtension;

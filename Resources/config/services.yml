@@ -5,9 +5,15 @@ services:
 
 
     t4_twig_extension.validator:
-      class: T4\Bundle\TwigExtensionBundle\Twig\ValidatorExtension
+      class: T4\Bundle\TwigExtensionBundle\Twig\Extension\ValidatorExtension
       public: false
       arguments:
         - '@validator'
+      tags:
+        - { name: twig.extension }
+
+    t4_twig_extension.ga:
+      class: T4\Bundle\TwigExtensionBundle\Twig\Extension\GaExtension
+      public: false
       tags:
         - { name: twig.extension }
