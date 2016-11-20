@@ -1,0 +1,26 @@
+{
+  "name": "24hoursmedia/twig-extension-bundle",
+  "type": "symfony-bundle",
+  "description": "Symfony 2 twig extension bundle",
+  "keywords": [],
+  "homepage": "https://github.com/24HOURSMEDIA/twig-extension-bundle",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "24hoursmedia"
+    }
+  ],
+  "require": {
+    "php": ">=5.6"
+  },
+  "autoload": {
+    "psr-4": { "psr-4": { "T4\\Bundle\\TwigExtensionBundle\\": "" } },
+    "exclude-from-classmap": [
+      "/Tests/"
+    ]
+  },
+  "minimum-stability": "dev",
+  "extra": {
+
+  }
+}
