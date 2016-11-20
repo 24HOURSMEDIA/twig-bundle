@@ -31,12 +31,12 @@ class GaExtension extends \Twig_Extension
     }
 
 
-    public function campaignFilter($html, $utm_source, $utm_medium, $utm_campaign)
+    public function campaignFilter($html, $utm_source = '', $utm_medium = '', $utm_campaign = '', $utm_content = '', $utm_term = '')
     {
         $doc = new \DOMDocument();
         $doc->loadHTML($html, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
         $m = new \T4\DomManipulations\Manipulator\Ga\GaAddCampaignToLinks();
-        $m->modify($doc, $utm_source, $utm_medium, $utm_campaign);
+        $m->modify($doc, $utm_source, $utm_medium, $utm_campaign, $utm_content, $utm_term);
         $newHtml = $doc->saveHTML();
         return $newHtml;
     }

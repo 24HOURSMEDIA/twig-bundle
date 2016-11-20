@@ -18,6 +18,8 @@ class GaCampaignTokenParser extends \Twig_TokenParser
             'utm_source' => new \Twig_Node_Expression_Constant(null,$lineno),
             'utm_medium' => new \Twig_Node_Expression_Constant(null,$lineno),
             'utm_campaign' => new \Twig_Node_Expression_Constant(null,$lineno),
+            'utm_content' => new \Twig_Node_Expression_Constant(null,$lineno),
+            'utm_term' => new \Twig_Node_Expression_Constant(null,$lineno),
         ];
         $i = 0;
         $key = null;
