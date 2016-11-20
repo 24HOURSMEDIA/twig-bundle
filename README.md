@@ -14,7 +14,7 @@ Extensions
 
 ### validator filters
 
-Apply symfony validator on data and return errors as an array.
+* apply symfony validator on data and return errors as an array for use in twig
 
 [read validator_extension docs](Resources/doc/validator-extension.md)
 
