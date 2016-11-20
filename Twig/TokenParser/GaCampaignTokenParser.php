@@ -12,41 +12,30 @@ class GaCampaignTokenParser extends \Twig_TokenParser
     {
 
         $lineno = $token->getLine();
-
-        $parms = [
-            'utm_source' => '',
-            'utm_campaign' => '',
-            'utm_medium' => ''
-        ];
-
-
         $expr = $this->parser->getExpressionParser()->parseExpression();
-        $data = [];
+
+        $data = [
+            'utm_source' => new \Twig_Node_Expression_Constant(null,$lineno),
+            'utm_medium' => new \Twig_Node_Expression_Constant(null,$lineno),
+            'utm_campaign' => new \Twig_Node_Expression_Constant(null,$lineno),
+        ];
+        $i = 0;
+        $key = null;
         foreach ($expr as $e) {
-            /* @var $e \Twig_Node_Expression_Constant */
-            $data[] = $e->getAttribute('value');
-        }
-
-        for ($i = 0; $i < count($data); $i+=2) {
-            switch ($data[$i]) {
-                case 'utm_source':
-                case 'utm_campaign':
-                case 'utm_medium':
-                    $parms[$data[$i]] =  $data[$i+1];
-                    break;
-                default:
-                    throw new \Exception('Unsupported ' . $data[$i]);
+            if (!$i) {
+                $key = $e->getAttribute('value');
+                $data[$key] = null;
+            } else {
+                $data[$key] = $e;
             }
+            $i = ($i + 1) & 1;
         }
 
 
         $this->parser->getStream()->expect(\Twig_Token::BLOCK_END_TYPE);
-
         $body = $this->parser->subparse(array($this, 'decideEnd'), true);
-
         $this->parser->getStream()->expect(\Twig_Token::BLOCK_END_TYPE);
-
-        return new GaCampaign($body, $parms, $lineno, $this->getTag());
+        return new GaCampaign($body, $data, $lineno, $this->getTag());
     }
 
     public function decideEnd(\Twig_Token $token)
