@@ -36,11 +36,11 @@ class GaCampaign extends \Twig_Node
             ->write("\$d = '" . $json . "';\n")
             ->write("ob_start();\n")
             ->subcompile($this->getNode('body'))
-            ->write("echo T4\\Bundle\\TwigExtensionBundle\\Twig\\Node\\GaCampaign::test(ob_get_clean(), \$d);")
+            ->write("echo T4\\Bundle\\TwigExtensionBundle\\Twig\\Node\\GaCampaign::render(ob_get_clean(), \$d);")
         ;
     }
 
-    static function test($body, $json) {
+    static function render($body, $json) {
         $parms = json_decode($json, true);
         $doc = new \DOMDocument();
         $doc->loadHTML($body, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
