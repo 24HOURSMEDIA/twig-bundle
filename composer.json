@@ -12,7 +12,13 @@
   ],
   "require": {
     "php": ">=5.6"
-  }
+  },
+  "autoload": {
+    "psr-4": { "T4\\Bundle\\TwigExtensionBundle\\": "" },
+    "exclude-from-classmap": [
+      "/Tests/"
+    ]
+  },
   "minimum-stability": "dev",
   "extra": {
 
