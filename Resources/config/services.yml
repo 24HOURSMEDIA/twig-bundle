@@ -1,0 +1,4 @@
+services:
+#    t4_twig_extension.example:
+#        class: T4\Bundle\TwigExtensionBundle\Example
+#        arguments: ["@service_id", "plain_value", "%parameter%"]
