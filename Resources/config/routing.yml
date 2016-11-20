@@ -1,3 +1,0 @@
-t4_twig_extension_homepage:
-    path:     /
-    defaults: { _controller: T4TwigExtensionBundle:Default:index }

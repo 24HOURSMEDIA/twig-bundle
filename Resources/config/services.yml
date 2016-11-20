@@ -2,3 +2,12 @@ services:
 #    t4_twig_extension.example:
 #        class: T4\Bundle\TwigExtensionBundle\Example
 #        arguments: ["@service_id", "plain_value", "%parameter%"]
+
+
+    t4_twig_extension.validator:
+      class: T4\Bundle\TwigExtensionBundle\Twig\ValidatorExtension
+      public: false
+      arguments:
+        - '@validator'
+      tags:
+        - { name: twig.extension }
