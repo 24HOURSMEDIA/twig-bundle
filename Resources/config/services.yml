@@ -1,3 +1,6 @@
+parameters:
+    t4_twig_extension.throw_exceptions: "%kernel.debug%"
+
 services:
 #    t4_twig_extension.example:
 #        class: T4\Bundle\TwigExtensionBundle\Example
@@ -9,11 +12,15 @@ services:
       public: false
       arguments:
         - '@validator'
+      calls:
+        - [setThrowExceptions, ["%t4_twig_extension.throw_exceptions%"]]
       tags:
         - { name: twig.extension }
 
     t4_twig_extension.ga:
       class: T4\Bundle\TwigExtensionBundle\Twig\Extension\GaExtension
       public: false
+      calls:
+        - [setThrowExceptions, ["%t4_twig_extension.throw_exceptions%"]]
       tags:
         - { name: twig.extension }

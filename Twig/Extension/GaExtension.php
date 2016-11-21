@@ -5,6 +5,8 @@
 
 namespace T4\Bundle\TwigExtensionBundle\Twig\Extension;
 
+use T4\Bundle\TwigExtensionBundle\Traits\DomDocumentSupportingExtensionTrait;
+use T4\Bundle\TwigExtensionBundle\Traits\OptionalExceptionThrowingTrait;
 use T4\Bundle\TwigExtensionBundle\Twig\TokenParser\GaCampaignTokenParser;
 
 /**
@@ -15,6 +17,8 @@ class GaExtension extends \Twig_Extension
 {
 
 
+    use DomDocumentSupportingExtensionTrait;
+    use OptionalExceptionThrowingTrait;
 
     public function getFilters()
     {
@@ -33,12 +37,28 @@ class GaExtension extends \Twig_Extension
 
     public function campaignFilter($html, $utm_source = '', $utm_medium = '', $utm_campaign = '', $utm_content = '', $utm_term = '')
     {
-        $doc = new \DOMDocument();
-        $doc->loadHTML($html, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
-        $m = new \T4\DomManipulations\Manipulator\Ga\GaAddCampaignToLinks();
-        $m->modify($doc, $utm_source, $utm_medium, $utm_campaign, $utm_content, $utm_term);
-        $newHtml = $doc->saveHTML();
-        return $newHtml;
+        $html = trim($html);
+        if (!strlen($html)) {
+            return $html;
+        }
+
+        try {
+            $doc = static::getLoadedDomDocument($html);
+
+            $m = new \T4\DomManipulations\Manipulator\Ga\GaAddCampaignToLinks();
+            $m->modify($doc, $utm_source, $utm_medium, $utm_campaign, $utm_content, $utm_term);
+            $newHtml = $doc->saveHTML();
+
+            return $newHtml;
+        } catch (\Exception $e) {
+            // return original html if exception throwing is disabled.
+            if ($this->throwExceptions()) {
+                throw $e;
+            } else {
+                // TODO: log...
+            }
+            return $html;
+        }
     }
 
     public function getName()

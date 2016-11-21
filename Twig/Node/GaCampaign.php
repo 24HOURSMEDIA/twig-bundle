@@ -19,6 +19,7 @@ class GaCampaign extends \Twig_Node
 
     public function compile(\Twig_Compiler $compiler)
     {
+
         $compiler
             ->addDebugInfo($this)
             //->write("\$d = '" . $json . "';\n")
@@ -39,19 +40,43 @@ class GaCampaign extends \Twig_Node
             ->write('$utm_term=')
             ->subcompile($this->getAttribute('utm_term'))
             ->write(';')
+            ->write('$ga_active=')
+            ->subcompile($this->getAttribute('active'))
+            ->write(';')
             ->subcompile($this->getNode('body'))
 
-            ->write('echo T4\Bundle\TwigExtensionBundle\Twig\Node\GaCampaign::render(ob_get_clean(), $utm_source, $utm_campaign, $utm_medium, $utm_content, $utm_term);')
+            ->write('echo T4\Bundle\TwigExtensionBundle\Twig\Node\GaCampaign::render(ob_get_clean(), $ga_active, $utm_source, $utm_campaign, $utm_medium, $utm_content, $utm_term);')
         ;
     }
 
-    static function render($body, $utm_source, $utm_campaign, $utm_medium, $utm_content, $utm_term) {
+    static function render($body, $active, $utm_source, $utm_campaign, $utm_medium, $utm_content, $utm_term) {
+        if (!$active) {
+            return $body;
+        }
+        if (!strlen($body)) {
+            return $body;
+        }
 
-        $doc = new \DOMDocument();
-        $doc->loadHTML($body, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
-        $m = new \T4\DomManipulations\Manipulator\Ga\GaAddCampaignToLinks();
-        $m->modify($doc, $utm_source, $utm_medium, $utm_campaign, $utm_content, $utm_term);
-        $newHtml = $doc->saveHTML();
+        try {
+            $doc = new \DOMDocument();
+            $doc->strictErrorChecking = false;
+            $oldErrors = false;
+            if (function_exists('libxml_use_internal_errors')) {
+                $oldErrors = libxml_use_internal_errors(true);
+            }
+            $doc->loadHTML($body, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
+            if (function_exists('libxml_use_internal_errors')) {
+                libxml_use_internal_errors($oldErrors);
+            }
+
+            $m = new \T4\DomManipulations\Manipulator\Ga\GaAddCampaignToLinks();
+            $m->modify($doc, $utm_source, $utm_medium, $utm_campaign, $utm_content, $utm_term);
+            $newHtml = $doc->saveHTML();
+
+        } catch (\Exception $e) {
+            //throw $e;
+            return $body;
+        }
         return $newHtml;
     }
 
