@@ -2,8 +2,18 @@
 
 symfony twig extensions bundle
 
-Extensions
+## installation
 
+Through composer in your symfony project:
+
+    composer require 24hoursmedia/twig-extension-bundle
+
+Then, register the bundle in your AppKernel by adding the following line:
+
+    new T4\Bundle\TwigExtensionBundle\T4TwigExtensionBundle()
+
+    
+## twig extensions    
 
 ### google analytics filters
 
