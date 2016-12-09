@@ -8,9 +8,12 @@ namespace T4\Bundle\TwigExtensionBundle\Twig\Extension;
 
 use Symfony\Bundle\TwigBundle\DependencyInjection\TwigExtension;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
+use T4\Bundle\TwigExtensionBundle\Traits\OptionalExceptionThrowingTrait;
 
 class ValidatorExtension extends \Twig_Extension
 {
+
+    use OptionalExceptionThrowingTrait;
 
     protected $validator;
 

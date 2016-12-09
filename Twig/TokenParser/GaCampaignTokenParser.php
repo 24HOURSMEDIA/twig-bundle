@@ -20,7 +20,9 @@ class GaCampaignTokenParser extends \Twig_TokenParser
             'utm_campaign' => new \Twig_Node_Expression_Constant(null,$lineno),
             'utm_content' => new \Twig_Node_Expression_Constant(null,$lineno),
             'utm_term' => new \Twig_Node_Expression_Constant(null,$lineno),
+            'active' => new \Twig_Node_Expression_Constant(true,$lineno)
         ];
+
         $i = 0;
         $key = null;
         foreach ($expr as $e) {
