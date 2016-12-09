@@ -6,7 +6,7 @@
 namespace T4\Bundle\TwigExtensionBundle\Twig\Extension;
 use Ouzo\Utilities\Strings;
 
-class TextExtension extends \TwigExtension
+class TextExtension extends \Twig_Extension
 {
 
     public function getFilters()
