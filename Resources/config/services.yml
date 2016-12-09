@@ -17,3 +17,9 @@ services:
       public: false
       tags:
         - { name: twig.extension }
+
+    t4_twig_extension.text:
+      class: T4\Bundle\TwigExtensionBundle\Twig\Extension\TextExtension
+      public: false
+      tags:
+        - { name: twig.extension }
